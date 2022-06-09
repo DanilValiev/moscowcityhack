@@ -1,0 +1,42 @@
+version: '3.6'
+
+services:
+
+  nginx:
+    container_name: rusprom_nginx
+    build:
+      context: .
+      dockerfile: dockerfiles/nginx/Dockerfile
+    restart: always
+    volumes:
+      - /var/log/nginx:/var/log/nginx
+      - ./dockerfiles/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dockerfiles/nginx/conf.d:/etc/nginx/conf.d
+      - ./public/bundles/:/var/www/public/bundles
+    ports:
+      - '8999:80'
+    depends_on:
+      - php-fpm
+
+  php-fpm:
+    container_name: rusprom_php-fpm
+    image: rusprom_php-dev
+    restart: always
+    environment:
+      PHP_MEMORY_LIMIT: "2048M"
+    volumes:
+        - ./:/var/www/
+
+  database:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_PASSWORD: wpkAdfCLzGST
+      POSTGRES_USER: admin
+    volumes:
+      - db-data:/var/lib/postgresql/data:rw
+    ports:
+      - "5432"
+
+volumes:
+  db-data:
