@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Gisp;
+namespace App\Service\Gisp\Production;
 
 use App\Entity\ContactInfo;
 use App\Entity\Production;
@@ -30,10 +30,10 @@ class ProductionFactory
         $productionModel = new Production();
 
         $productionModel
-            ->setTitle($productionBasic['org_name'])
-            ->setOgrn($productionBasic['org_ogrn'])
-            ->setInn($productionBasic['org_inn'])
-            ->setAddress($productionBasic['org_addr'])
+            ->setTitle($productionBasic['org_name'] ?? $productionBasic['name'])
+            ->setOgrn($productionBasic['org_ogrn'] ?? $productionBasic['ogrn'])
+            ->setInn($productionBasic['org_inn'] ?? $productionBasic['inn'])
+            ->setAddress($productionBasic['org_addr'] ?? null)
         ;
 
         return $productionModel;

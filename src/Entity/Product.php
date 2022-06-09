@@ -32,6 +32,12 @@ class Product
     #[ORM\Column(type: 'datetime_immutable')]
     private $created_at;
 
+    #[ORM\ManyToOne(targetEntity: Categories::class, inversedBy: 'products')]
+    private $category;
+
+    #[ORM\Column(type: 'integer')]
+    private $externalId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +111,30 @@ class Product
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Categories
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Categories $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getExternalId(): ?int
+    {
+        return $this->externalId;
+    }
+
+    public function setExternalId(int $externalId): self
+    {
+        $this->externalId = $externalId;
 
         return $this;
     }

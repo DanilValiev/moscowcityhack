@@ -2,18 +2,19 @@
 
 namespace App\Command;
 
-use App\Service\Gisp\Production\ProductionService;
+use App\Service\Gisp\Category\CategoryService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(name: 'base:production:sync', description: 'Update the database of enterprises with gisp')]
-class SyncProductions extends Command
+#[AsCommand(name: 'base:categories:sync', description: 'Update the database of categories with gisp')]
+class SyncCategories extends Command
 {
+
     public function __construct(
-        private ProductionService $productionService
+        private CategoryService $categoryService
     )
     {
         parent::__construct(self::getName());
@@ -23,16 +24,16 @@ class SyncProductions extends Command
     {
         $progressBar = new ProgressBar($output, 100);
         $progressBar->start();
-        $progressBar->setMessage('Sync productions start...');
+        $progressBar->setMessage('Sync category start...');
 
-        $added = $this->productionService
+        $added = $this->categoryService
             ->setProgressBar($progressBar)
             ->sync()
         ;
 
         $progressBar->finish();
 
-        $output->writeln("Sync successfully done! \n{$added} productions was added.");
+        $output->writeln("\n Sync successfully done! \n{$added} categories was added.");
 
         return self::SUCCESS;
     }

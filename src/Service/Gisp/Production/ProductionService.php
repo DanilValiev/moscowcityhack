@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Service\Gisp;
+namespace App\Service\Gisp\Production;
 
+use App\Entity\Production;
 use App\Repository\ProductionRepository;
 use App\Service\CurlRequestService;
+use App\Service\Gisp\SyncInterface;
 use RuntimeException;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-class ProductionService
+class ProductionService implements SyncInterface
 {
 
     private ?ProgressBar $progressBar;
 
     public function __construct(
         private CurlRequestService $requestService,
-        private ProductionRepository $productionRepository,
+        public ProductionRepository $productionRepository,
         private ProductionFactory $productionFactory,
         private string $orgApiUri,
         private string $orgDetailsUri
@@ -23,11 +25,11 @@ class ProductionService
         $this->progressBar = null;
     }
 
-    public function sync(): string
+    public function sync(): int
     {
         $productions = $this->getProductionsFromApi();
         $added = 0;
-        $i = 1;
+        $i = 0;
 
         foreach ($productions['items'] as $production) {
             if (!$this->productionRepository->checkExist($production['org_ogrn']))
@@ -52,6 +54,16 @@ class ProductionService
         $this->progressBar = $progressBar;
 
         return $this;
+    }
+
+    public function addProductionFromProduct(array $production): Production
+    {
+        $productionDetails = $this->getProductionDetail($production['ogrn']);
+        $productionModel = $this->productionFactory->build($production, $productionDetails);
+
+        $this->productionRepository->add($productionModel, true);
+
+        return $productionModel;
     }
 
     private function getProductionDetail(int $ogrn): ?array

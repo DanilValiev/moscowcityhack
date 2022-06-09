@@ -6,6 +6,8 @@
 parameters:
     app.gisp.org_api_url: '%env(ORG_API_URI)%'
     app.gisp.org_details_api_url: '%env(ORG_DERAILS_URI)%'
+    app.gisp.product_references_url: '%env(PRODUCT_REFERENCES_URI)%'
+    app.gisp.product_api_uri: '%env(PRODUCT_API_URI)%'
 
 services:
     # default configuration for services in *this* file
@@ -26,10 +28,18 @@ services:
         resource: '../src/Controller'
         tags: [ 'controller.service_arguments' ]
 
-    App\Service\Gisp\ProductionService:
+    App\Service\Gisp\Production\ProductionService:
         arguments:
             $orgApiUri: "%app.gisp.org_api_url%"
             $orgDetailsUri: '%app.gisp.org_details_api_url%'
+
+    App\Service\Gisp\Category\CategoryService:
+        arguments:
+            $productReferencesUrl: '%app.gisp.product_references_url%'
+
+    App\Service\Gisp\Product\ProductService:
+        arguments:
+            $productApiUri: '%app.gisp.product_api_uri%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
