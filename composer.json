@@ -18,7 +18,8 @@
         "symfony/framework-bundle": "*",
         "symfony/runtime": "*",
         "symfony/validator": "6.1.*",
-        "symfony/yaml": "*"
+        "symfony/yaml": "*",
+        "ext-curl": "*"
     },
     "config": {
         "allow-plugins": {

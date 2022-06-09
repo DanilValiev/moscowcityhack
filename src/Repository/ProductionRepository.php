@@ -39,6 +39,11 @@ class ProductionRepository extends ServiceEntityRepository
         }
     }
 
+    public function checkExist(string $ogrn): bool
+    {
+        return $this->findOneBy(['Ogrn' => $ogrn]) != NULL;
+    }
+
 //    /**
 //     * @return Production[] Returns an array of Production objects
 //     */

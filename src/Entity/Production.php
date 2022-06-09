@@ -18,14 +18,11 @@ class Production
     #[ORM\Column(type: 'string', length: 255)]
     private $Title;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'string')]
     private $Ogrn;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $inn;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $contactFio;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $logo;
@@ -41,6 +38,12 @@ class Production
 
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Product::class, orphanRemoval: true)]
     private $products;
+
+    #[ORM\OneToOne(mappedBy: 'production', targetEntity: ContactInfo::class, cascade: ['persist', 'remove'])]
+    private $contactInfo;
+
+    #[ORM\ManyToOne(targetEntity: Region::class, cascade: ['persist'], inversedBy: 'production')]
+    private $region;
 
     public function __construct()
     {
@@ -64,38 +67,26 @@ class Production
         return $this;
     }
 
-    public function getOgrn(): ?int
+    public function getOgrn(): ?string
     {
         return $this->Ogrn;
     }
 
-    public function setOgrn(int $Ogrn): self
+    public function setOgrn(string $Ogrn): self
     {
         $this->Ogrn = $Ogrn;
 
         return $this;
     }
 
-    public function getInn(): ?int
+    public function getInn(): ?string
     {
         return $this->inn;
     }
 
-    public function setInn(?int $inn): self
+    public function setInn(?string $inn): self
     {
         $this->inn = $inn;
-
-        return $this;
-    }
-
-    public function getContactFio(): ?string
-    {
-        return $this->contactFio;
-    }
-
-    public function setContactFio(?string $contactFio): self
-    {
-        $this->contactFio = $contactFio;
 
         return $this;
     }
@@ -174,6 +165,35 @@ class Production
                 $product->setCompany(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getContactInfo(): ?ContactInfo
+    {
+        return $this->contactInfo;
+    }
+
+    public function setContactInfo(ContactInfo $contactInfo): self
+    {
+        // set the owning side of the relation if necessary
+        if ($contactInfo->getProduction() !== $this) {
+            $contactInfo->setProduction($this);
+        }
+
+        $this->contactInfo = $contactInfo;
+
+        return $this;
+    }
+
+    public function getRegion(): ?Region
+    {
+        return $this->region;
+    }
+
+    public function setRegion(?Region $region): self
+    {
+        $this->region = $region;
 
         return $this;
     }
