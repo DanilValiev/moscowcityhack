@@ -21,12 +21,16 @@ class SyncProducts extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $progressBar = new ProgressBar($output, 100);
+        $section1 = $output->section();
+        $section2 = $output->section();
+
+        $progressBar = new ProgressBar($section1);
         $progressBar->start();
         $progressBar->setMessage('Sync productions start...');
 
         $added = $this->productService
             ->setProgressBar($progressBar)
+            ->setOutput($section2)
             ->sync()
         ;
 

@@ -44,6 +44,20 @@ class CategoriesRepository extends ServiceEntityRepository
         return $this->findOneBy(['externalId' => $externalId]) != NULL;
     }
 
+    /**
+     * @return Categories[]
+     */
+    public function findAllByLimit(int $offset, int $limit): array
+    {
+        return $this->createQueryBuilder('c')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->addOrderBy('c.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Categories[] Returns an array of Categories objects
 //     */

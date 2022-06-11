@@ -15,7 +15,7 @@ class Production
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text')]
     private $Title;
 
     #[ORM\Column(type: 'string')]
@@ -33,7 +33,7 @@ class Production
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $url;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'text', nullable: true)]
     private $Address;
 
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Product::class, orphanRemoval: true)]

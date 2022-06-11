@@ -13,7 +13,7 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'text')]
     private $Title;
 
     #[ORM\Column(type: 'integer', nullable: true)]
