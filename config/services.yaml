@@ -8,6 +8,7 @@ parameters:
     app.gisp.org_details_api_url: '%env(ORG_DERAILS_URI)%'
     app.gisp.product_references_url: '%env(PRODUCT_REFERENCES_URI)%'
     app.gisp.product_api_uri: '%env(PRODUCT_API_URI)%'
+    app.gisp.product_detail_api_uri: '%env(PRODUCT_DETAIL_API)%'
 
 services:
     # default configuration for services in *this* file
@@ -41,5 +42,8 @@ services:
         arguments:
             $productApiUri: '%app.gisp.product_api_uri%'
 
+    App\Service\Gisp\Product\ProductsDetailService:
+        arguments:
+            $apiDetailProduct: '%app.gisp.product_detail_api_uri%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

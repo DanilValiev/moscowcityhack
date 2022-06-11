@@ -45,9 +45,13 @@ class Production
     #[ORM\ManyToOne(targetEntity: Region::class, cascade: ['persist'], inversedBy: 'production')]
     private $region;
 
+    #[ORM\ManyToMany(targetEntity: Industrial::class, inversedBy: 'productions')]
+    private $industries;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->industries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +198,30 @@ class Production
     public function setRegion(?Region $region): self
     {
         $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Industrial>
+     */
+    public function getIndustries(): Collection
+    {
+        return $this->industries;
+    }
+
+    public function addIndustry(Industrial $industry): self
+    {
+        if (!$this->industries->contains($industry)) {
+            $this->industries[] = $industry;
+        }
+
+        return $this;
+    }
+
+    public function removeIndustry(Industrial $industry): self
+    {
+        $this->industries->removeElement($industry);
 
         return $this;
     }

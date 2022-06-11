@@ -38,6 +38,27 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $externalId;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $description;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $gost;
+
+    #[ORM\ManyToOne(targetEntity: Industrial::class, inversedBy: 'products')]
+    private $industry;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $odkp2;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $tnved;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    private $characteristics = [];
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $okeiId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +156,90 @@ class Product
     public function setExternalId(int $externalId): self
     {
         $this->externalId = $externalId;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getGost(): ?string
+    {
+        return $this->gost;
+    }
+
+    public function setGost(?string $gost): self
+    {
+        $this->gost = $gost;
+
+        return $this;
+    }
+
+    public function getIndustry(): ?Industrial
+    {
+        return $this->industry;
+    }
+
+    public function setIndustry(?Industrial $industry): self
+    {
+        $this->industry = $industry;
+
+        return $this;
+    }
+
+    public function getOdkp2(): ?string
+    {
+        return $this->odkp2;
+    }
+
+    public function setOdkp2(?string $odkp2): self
+    {
+        $this->odkp2 = $odkp2;
+
+        return $this;
+    }
+
+    public function getTnved(): ?string
+    {
+        return $this->tnved;
+    }
+
+    public function setTnved(?string $tnved): self
+    {
+        $this->tnved = $tnved;
+
+        return $this;
+    }
+
+    public function getCharacteristics(): ?array
+    {
+        return $this->characteristics;
+    }
+
+    public function setCharacteristics(?array $characteristics): self
+    {
+        $this->characteristics = $characteristics;
+
+        return $this;
+    }
+
+    public function getOkeiId(): ?int
+    {
+        return $this->okeiId;
+    }
+
+    public function setOkeiId(?int $okeiId): self
+    {
+        $this->okeiId = $okeiId;
 
         return $this;
     }

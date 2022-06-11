@@ -44,6 +44,27 @@ class ProductRepository extends ServiceEntityRepository
         return $this->findOneBy(['externalId' => $externalId]) != NULL;
     }
 
+    public function findAllIterable(int $offset, int $limit): iterable
+    {
+        return $this->createQueryBuilder('p')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->toIterable()
+        ;
+    }
+
+    public function detach(Product $product)
+    {
+        $this->_em->detach($product);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
