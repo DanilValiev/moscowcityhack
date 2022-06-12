@@ -9,6 +9,7 @@ parameters:
     app.gisp.product_references_url: '%env(PRODUCT_REFERENCES_URI)%'
     app.gisp.product_api_uri: '%env(PRODUCT_API_URI)%'
     app.gisp.product_detail_api_uri: '%env(PRODUCT_DETAIL_API)%'
+    app.fns.api_url: '%env(FNS_API_URL)%'
 
 services:
     # default configuration for services in *this* file
@@ -33,6 +34,10 @@ services:
         arguments:
             $orgApiUri: "%app.gisp.org_api_url%"
             $orgDetailsUri: '%app.gisp.org_details_api_url%'
+
+    App\Service\Gisp\Production\ProductionDetailService:
+        arguments:
+            $fnsApiUrl: "%app.fns.api_url%"
 
     App\Service\Gisp\Category\CategoryService:
         arguments:

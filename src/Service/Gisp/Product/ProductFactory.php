@@ -42,7 +42,7 @@ class ProductFactory
             ->setGost($details['gost'])
             ->setIndustry($this->getIndustry($details['industrialArea'], $details['company']))
             ->setOkeiId($details['okeiId'])
-            ->setOdkp2($details['okpd2']['code'])
+            ->setOdkp2($details['okpd2']['code'] ?? null)
             ->setTnved($details['tnved'][0]['code'] ?? null)
             ->setCharacteristics($details['characteristics'])
         ;

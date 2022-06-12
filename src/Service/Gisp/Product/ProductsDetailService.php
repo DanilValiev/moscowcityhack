@@ -38,6 +38,9 @@ class ProductsDetailService implements SyncInterface
         foreach ($this->progressBar->iterate($products) as $product)
         {
             $productDetail = $this->getDetailProductsApi($product->getExternalId());
+            if (!$productDetail) {
+                continue ;
+            }
 
             $this->productFactory->buildDetail($product, $productDetail);
 
@@ -70,7 +73,7 @@ class ProductsDetailService implements SyncInterface
         return $this;
     }
 
-    private function getDetailProductsApi(string $productId): array
+    private function getDetailProductsApi(string $productId): ?array
     {
         $response = $this->requestService->send(
             "{$this->apiDetailProduct}/{$productId}",
@@ -82,7 +85,7 @@ class ProductsDetailService implements SyncInterface
         );
 
         if (!$response) {
-            throw new RuntimeException("Gisp reestr API returned an empty response, ID: {$productId}");
+            print_r("Gisp reestr API returned an empty response, ID: {$productId} \n");
         }
 
         return $response;

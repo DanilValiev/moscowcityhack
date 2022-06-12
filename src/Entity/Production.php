@@ -18,7 +18,7 @@ class Production
     #[ORM\Column(type: 'text')]
     private $Title;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     private $Ogrn;
 
     #[ORM\Column(type: 'string', nullable: true)]
@@ -48,10 +48,32 @@ class Production
     #[ORM\ManyToMany(targetEntity: Industrial::class, inversedBy: 'productions')]
     private $industries;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $manual;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    private $support = [];
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $companyRegData;
+
+    #[ORM\ManyToOne(targetEntity: Odkv::class, inversedBy: 'productions')]
+    private $odvkPrimary;
+
+    #[ORM\ManyToMany(targetEntity: Odkv::class)]
+    private $odkvSecondary;
+
+    #[ORM\Column(type: 'json', nullable: true)]
+    private $finReport = [];
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $staturoryCapital;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->industries = new ArrayCollection();
+        $this->odkvSecondary = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +244,102 @@ class Production
     public function removeIndustry(Industrial $industry): self
     {
         $this->industries->removeElement($industry);
+
+        return $this;
+    }
+
+    public function isManual(): ?bool
+    {
+        return $this->manual;
+    }
+
+    public function setManual(?bool $manual): self
+    {
+        $this->manual = $manual;
+
+        return $this;
+    }
+
+    public function getSupport(): ?array
+    {
+        return $this->support;
+    }
+
+    public function setSupport(?array $support): self
+    {
+        $this->support = $support;
+
+        return $this;
+    }
+
+    public function getCompanyRegData(): ?string
+    {
+        return $this->companyRegData;
+    }
+
+    public function setCompanyRegData(?string $companyRegData): self
+    {
+        $this->companyRegData = $companyRegData;
+
+        return $this;
+    }
+
+    public function getOdvkPrimary(): ?Odkv
+    {
+        return $this->odvkPrimary;
+    }
+
+    public function setOdvkPrimary(?Odkv $odvkPrimary): self
+    {
+        $this->odvkPrimary = $odvkPrimary;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Odkv>
+     */
+    public function getOdkvSecondary(): Collection
+    {
+        return $this->odkvSecondary;
+    }
+
+    public function addOdkvSecondary(Odkv $odkvSecondary): self
+    {
+        if (!$this->odkvSecondary->contains($odkvSecondary)) {
+            $this->odkvSecondary[] = $odkvSecondary;
+        }
+
+        return $this;
+    }
+
+    public function removeOdkvSecondary(Odkv $odkvSecondary): self
+    {
+        $this->odkvSecondary->removeElement($odkvSecondary);
+
+        return $this;
+    }
+
+    public function getFinReport(): ?array
+    {
+        return $this->finReport;
+    }
+
+    public function setFinReport(?array $finReport): self
+    {
+        $this->finReport = $finReport;
+
+        return $this;
+    }
+
+    public function getStaturoryCapital(): ?string
+    {
+        return $this->staturoryCapital;
+    }
+
+    public function setStaturoryCapital(?string $staturoryCapital): self
+    {
+        $this->staturoryCapital = $staturoryCapital;
 
         return $this;
     }

@@ -44,6 +44,26 @@ class ProductionRepository extends ServiceEntityRepository
         return $this->findOneBy(['Ogrn' => $ogrn]) != NULL;
     }
 
+    public function findAllIterable(int $offset, int $limit): iterable
+    {
+        return $this->createQueryBuilder('p')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->toIterable()
+        ;
+    }
+
+    public function detach(Production $product)
+    {
+        $this->_em->detach($product);
+    }
+
+    public function flush()
+    {
+        $this->_em->flush();
+    }
 //    /**
 //     * @return Production[] Returns an array of Production objects
 //     */
