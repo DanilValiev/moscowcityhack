@@ -1,0 +1,183 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.card .card-header .topFont
+{
+    margin: 0;
+    font-weight: 600;
+}
+
+.card .card-header .littleFont
+{
+    margin-bottom: 0;
+    margin-top: -8px;
+    font-size: 15px;
+}
+
+.card .card-description p
+{
+    margin: 0;
+    font-size: 13px;
+    color: #5d4e4e;
+}
+
+.card .card-description
+{
+    margin-bottom: 5px;
+    margin-top: -15px;
+}
+
+.card .my-card-link
+{
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.col-4 .card
+{
+    margin-top: 40px;
+}
+
+.my-header
+{
+    height: 70px;
+    border-bottom: 1px solid #3f3939;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+}
+
+.my-search-div
+{
+    background-color: #dfdcdc;
+    padding: 10px;
+    display: flex;
+    border-radius: 10px;
+}
+
+.my-search-div input
+{
+    border: 0;
+    background-color: transparent;
+    width: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    outline: none;
+}
+
+.my-search-div button
+{
+    height: 37px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.justify-content-between .col-4
+{
+    width: fit-content;
+}
+
+.my-filter
+{
+    display: grid;
+}
+
+.my-filter .title
+{
+    font-size: 30px;
+    font-weight: 200;
+    display: block;
+    margin-top: -12px;
+    margin-bottom: 20px;
+}
+
+.my-filter .body-filter
+{
+    margin-bottom: 15px;
+}
+
+.my-filter .body-filter p
+{
+    margin-bottom: 1px;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.my-filter .body-filter input
+{
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px;
+    outline: none;
+    font-weight: 300;
+}
+
+.company-detail-title
+{
+    font-size: 23px;
+    font-weight: 300;
+}
+
+.company-basic-description img
+{
+    width: 300px;
+}
+
+.company-basic-description b
+{
+    font-size: 12px;
+    max-width: 400px;
+    margin-left: 20px;
+}
+
+.company-information-block
+{
+    margin-top: 20px;
+}
+
+.company-information-block .title
+{
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.company-information-block .enum
+{
+    display: grid;
+}
+
+.company-information-block .enum .item
+{
+    display: flex;
+    margin-bottom: -15px;
+}
+
+.company-information-block .enum .item b
+{
+    margin-right: 10px;
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.company-information-block .enum .item p
+{
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.company-trend-info
+{
+    display: grid;
+    margin-top: 15px;
+}
+
+.company-trend-info .title
+{
+    font-size: 30px;
+    font-weight: 200;
+    display: block;
+    margin-top: -12px;
+    margin-bottom: 20px;
+}

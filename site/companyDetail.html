@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Компания</title>
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/companyDetailsGetter.js"></script>
+</head>
+<body>
+<!-- ЗАГОЛОВОК  -->
+<header class="d-flex justify-content-center py-3 my-header">
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a href="products.html" class="nav-link" aria-current="page">Товары</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link active">Компании</a></li>
+        <li class="nav-item"><a href="analityc.html" class="nav-link">Аналитика</a></li>
+    </ul>
+</header>
+<!-- ЗАГОЛОВОК  -->
+<div class="container" style="margin-top: 50px; margin-bottom: 100px">
+    <div class="row g-5">
+        <!--  Левое окно  -->
+        <div style="margin-left: auto" class="col-md-7 col-lg-8">
+            <p class="company-detail-title" id="general-title">АО "АвтоВАЗ"</p>
+            <!--  ЕСИА/ЕГРЮЛ  -->
+            <div class="company-information-block">
+                <p class="title">Сведения о предприятии из ЕСИА/ЕГРЮЛ</p>
+                <div class="enum">
+                    <div class="item">
+                        <b>Название:</b>
+                        <p id="detail-title">АКЦИОНЕРНОЕ ОБЩЕСТВО "3М РОССИЯ"</p>
+                    </div>
+                    <div class="item">
+                        <b>Адресс:</b>
+                        <p id="detail-address">ГОРОД МОСКВА, КИЛОМЕТР КИЕВСКОЕ ШОССЕ 22-Й (П МОСКОВСКИЙ), ДОМОВЛ 6 СТРОЕНИЕ 1</p>
+                    </div>
+                    <div class="item">
+                        <b>Инн:</b>
+                        <p id="detail-inn">7702045083</p>
+                    </div>
+                    <div class="item">
+                        <b>Огрн:</b>
+                        <p id="detail-ogrn">1027700133988</p>
+                    </div>
+                    <div class="item">
+                        <b>Дата регистрации:</b>
+                        <p id="detail-reg">2002-08-16</p>
+                    </div>
+                    <div class="item">
+                        <b>Уставной капитал:</b>
+                        <p id="detail-capital">74441400 рублей</p>
+                    </div>
+                    <div class="item" id="org-products">
+                        <b>Товары:</b>
+                    </div>
+                </div>
+            </div>
+            <!--  /ЕСИЯ/ЕГРЮЛ -->
+            <!--  ОКПД  -->
+            <div class="company-information-block">
+                <p class="title">Основная сфера дейтельности (ОКПД)</p>
+                <div class="enum">
+                    <div class="item">
+                        <b id="primary-okpd-code">46.49:</b>
+                        <p id="primary-okpd-title">Торговля оптовая прочими бытовыми товарами</p>
+                    </div>
+                </div>
+            </div>
+            <div class="company-information-block">
+                <p class="title">Дополнительные сферы дейтельности (ОКПД)</p>
+                <div class="enum" id="okpd-sec-info">
+
+                </div>
+            </div>
+            <!--  /ОКПД  -->
+            <!--  Контакты   -->
+            <div class="company-information-block">
+                <p class="title">Контакты</p>
+                <div class="enum">
+                    <div class="item">
+                        <b>Контактное лицо:</b>
+                        <p id="contact-fio">Дмитрук Сергей Леонидович</p>
+                    </div>
+                    <div class="item">
+                        <b>Директор:</b>
+                        <p id="contact-director">Дмитрук Сергей Леонидович</p>
+                    </div>
+                    <div class="item">
+                        <b>Эллектронная почта:</b>
+                        <p id="contact-email">mbreusova@mmm.com, sdmitrouk1@mmm.com</p>
+                    </div>
+                    <div class="item">
+                        <b>Телефон:</b>
+                        <p id="contact-phone">+79858181281, +79858181471</p>
+                    </div>
+                    <div class="item">
+                        <b>Факс:</b>
+                        <p id="contact-fax">-</p>
+                    </div>
+                </div>
+            </div>
+            <!--  /Контакты   -->
+            <!--  Фин отчетность   -->
+            <div class="company-information-block">
+                <p class="title">Финансовая отчетность</p>
+                <div id="fin-report" class="enum">
+                </div>
+            </div>
+            <!--  /Фин отчетность   -->
+            <!--  Гос помощь  -->
+            <div class="company-information-block">
+                <p class="title">Гос помощь</p>
+                <div id="fin-support" class="enum">
+                </div>
+            </div>
+            <!--  /Гос помощь  -->
+        </div>
+        <!--  Левое окно  -->
+        <!--   Правое окно     -->
+        <div style="margin-right: auto; width: fit-content" class="col-md-5 col-lg-3 order-md-last">
+            <div class="company-trend-info">
+                <b class="title">Рейтинг компании</b>
+            </div>
+        </div>
+        <!--   Правое окно    -->
+    </div>
+</div>
+</body>
+</html>
