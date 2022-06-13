@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+    )
     {
         parent::__construct($registry, Product::class);
     }
@@ -53,6 +59,61 @@ class ProductRepository extends ServiceEntityRepository
             ->getQuery()
             ->toIterable()
         ;
+    }
+
+    public function findProductionByName(string $data)
+    {
+        return $this->createQueryBuilder('p')
+            ->where("p.Title LIKE '%{$data}%'")
+            ->orWhere("p.tnved = '{$data}'")
+            ->orWhere("p.gost = '{$data}'")
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function findByfilters(?string $odkp, ?string $ogrn): array
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata(Product::class, 'le');
+
+        if ($odkp != NUll && $odkp != 0) {
+            $where = "o.code = {$odkp}";
+        } else {
+            $where = 'true';
+        }
+
+        if ($ogrn != NULL && $ogrn != 0) {
+            $andWhere = "pd.ogrn = '{$ogrn}'";
+        } else {
+            $andWhere = 'true';
+        }
+
+        return $this->_em->createNativeQuery("
+            SELECT 
+                   p.*
+            FROM 
+                 product as p
+            JOIN 
+                     odkv o on p.odkp2 = o.code
+            JOIN     
+                    production pd on pd.id = p.company_id 
+            WHERE 
+                  {$where}
+            AND 
+                  {$andWhere}
+        ", $rsm)
+            ->getArrayResult();
+    }
+
+    public function findProductPaginated(int $page, int $peerPage): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('p')
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery();
+
+        return $this->paginator->paginate($query, $page, $peerPage);
     }
 
     public function detach(Product $product)

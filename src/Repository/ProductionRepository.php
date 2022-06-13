@@ -4,7 +4,10 @@ namespace App\Repository;
 
 use App\Entity\Production;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Production>
@@ -16,7 +19,10 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductionRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(
+        ManagerRegistry $registry,
+        private PaginatorInterface $paginator
+    )
     {
         parent::__construct($registry, Production::class);
     }
@@ -53,6 +59,57 @@ class ProductionRepository extends ServiceEntityRepository
             ->getQuery()
             ->toIterable()
         ;
+    }
+
+    public function findProductionByName(string $data)
+    {
+        return $this->createQueryBuilder('p')
+            ->where("p.Title LIKE '%{$data}%'")
+            ->orWhere("p.inn = '{$data}'")
+            ->orWhere("p.Ogrn = '{$data}'")
+            ->orWhere("p.Address LIKE '%{$data}%'")
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findProductionsPaginated(int $page, int $peerPage): PaginationInterface
+    {
+        $query = $this->createQueryBuilder('p')
+            ->addOrderBy('p.id', 'ASC')
+            ->getQuery();
+
+        return $this->paginator->paginate($query, $page, $peerPage);
+    }
+
+    public function findByfilters(?string $odkp, ?string $capital): array
+    {
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata(Production::class, 'le');
+
+        if ($odkp != NUll && $odkp != 0) {
+            $where = "o.code = {$odkp}";
+        } else {
+            $where = 'true';
+        }
+
+        return $this->_em->createNativeQuery("
+            SELECT 
+                   p.title, p.id, p.staturory_capital, p.title, p.address, p.ogrn, p.inn, p.url
+            FROM 
+                 production as p
+            JOIN 
+                     odkv o on p.odvk_primary_id = o.id
+            WHERE 
+                  {$where}
+            AND 
+                  p.staturory_capital > :capital
+        ", $rsm)
+            ->setParameters([
+                'capital' => $capital
+            ])
+            ->getArrayResult();
     }
 
     public function detach(Production $product)

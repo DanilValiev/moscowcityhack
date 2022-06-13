@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-use App\Service\ControllerManager\ProductionManager;
+use App\Service\ControllerManager\ProductManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('api/company')]
-class ProductionController
+#[Route('api/product')]
+class ProductController
 {
     public function __construct(
-        private ProductionManager $productionManager
+        private ProductManager $productionManager
     ) { }
 
     #[Route('/get', methods: ['GET'])]
@@ -21,16 +21,6 @@ class ProductionController
         $perPage = $request->query->get('perPage', 25);;
 
         $response = $this->productionManager->getAllProductionsPaginated($page, $perPage);
-
-        return new JsonResponse($response, 200, [
-            'Access-Control-Allow-Origin' => '*'
-        ]);
-    }
-
-    #[Route('/detail/{id}', methods: ['GET'])]
-    public function getById(string $id): JsonResponse
-    {
-        $response = $this->productionManager->getById($id);
 
         return new JsonResponse($response, 200, [
             'Access-Control-Allow-Origin' => '*'
@@ -51,9 +41,9 @@ class ProductionController
     public function getByFilters(Request $request): JsonResponse
     {
         $odkp = $request->query->get('odkp', 0);;
-        $ogrn = $request->query->get('ogrn', 0);;
+        $capital = $request->query->get('capital', 0);;
 
-        $response = $this->productionManager->getByFilter($odkp, $ogrn);
+        $response = $this->productionManager->getByFilter($odkp, $capital);
 
         return new JsonResponse($response, 200, [
             'Access-Control-Allow-Origin' => '*'
