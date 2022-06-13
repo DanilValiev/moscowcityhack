@@ -1,6 +1,6 @@
 const url = "http://212.224.113.29:8999/api/product/get?perPage=27";
-const searchUrl = "http://10.254.254.254:8999/api/product/search";
-const filterUrl = "http://10.254.254.254:8999/api/product/filter"
+const searchUrl = "http://212.224.113.29:8999/api/product/search";
+const filterUrl = "http://212.224.113.29:8999/api/product/filter"
 let globalData = null;
 const params = {};
 
